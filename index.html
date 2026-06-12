@@ -33,7 +33,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display+SC:wght@400;700;900&family=Qwitcher+Grypen:wght@400;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/src/styles.scss">
 </head>
 
@@ -46,7 +46,9 @@
 
 	<section class="header">
 		<div class="header--container">
-			<h1 class="header--brand">GOLD NISRINE</h1>
+			<a class="header--brand" href="/">
+				<img class="header--logo" src="assets/images/logo.svg" alt="Gold Nisrine logo">
+			</a>
 			<ul class="header--menu">
 				<li class="music--control">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +82,7 @@
 			<div class="hero--content">
 				<h1>Bijoux<br>Uniques</h1>
 				<div class="hero--text">
-					<p>Personnalisez votre bague unique avec des angles graphiques et des lignes pures qui se combinent pour créer la beauté pure de la collection.</p>
+					<p>Personnalisez votre bijou unique avec des angles graphiques et des lignes pures qui se combinent pour créer la beauté pure de la collection.</p>
 					<button tabindex="-1" class="button button-scroll">
 						Commencer
 						<svg width="46" height="46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23 42.2a19.2 19.2 0 1 0 0-38.4 19.2 19.2 0 0 0 0 38.4Z" stroke="#FFD700" stroke-linecap="round" stroke-linejoin="round"/><path d="m15.3 23 7.7 7.7 7.7-7.7M23 15.3v15.4" stroke="#FFD700" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -109,9 +111,9 @@
 			<div class="forever--content">
 				<div class="forever--title">
 					<h2>créé pour durer</h2>
-					<h1>Éter<br>nel</h1>
+					<h1>Éternel</h1>
 				</div>
-				<p>Personnalisez votre bague unique avec des angles graphiques et des lignes pures qui se combinent pour créer la beauté pure de la collection.</p>
+				<p>Personnalisez votre bijou unique avec des angles graphiques et des lignes pures qui se combinent pour créer la beauté pure de la collection.</p>
 			</div>
 		</div>
 	</section>
@@ -123,7 +125,7 @@
 				<div class="emotions--text">
 					<h2>partagez vos</h2>
 					<h1>Émotions</h1>
-					<p>Pierres précieuses colorées de l'aigue-marine, l'améthyste, la tourmaline aux diamants se réunissent en or blanc sur cette bague de luxe.</p>
+					<p>Pierres précieuses colorées de l'aigue-marine, l'améthyste, la tourmaline aux diamants se réunissent en or sur cette création de luxe.</p>
 				</div>
 				<button tabindex="-1" class="btn-customize">
 					Personnaliser
@@ -183,7 +185,7 @@
 	</div>
 
 	<div class="exit--container">
-		<h3 class="customize--title">Personnalisez votre bague</h3>
+		<h3 class="customize--title">Personnalisez votre bijou</h3>
 		<p class="copyright">Gold Nisrine - Maison de Joaillerie Marocaine de Luxe. Tous droits réservés.</p>
 		<svg class="music--control--2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="#FFD700" stroke-linecap="round" stroke-linejoin="round"/>
@@ -242,7 +244,7 @@
 					<img src="assets/images/gold (6).jpeg" alt="Bijou Gold Nisrine 6">
 					<div class="gallery-overlay">
 						<span class="gallery-number">06</span>
-						<h3>Bague Éternité</h3>
+						<h3>Création Éternité</h3>
 					</div>
 				</div>
 			</div>
@@ -265,20 +267,20 @@
 	<section class="section order-section">
 		<div class="order--container">
 			<div class="order--title">
+				<span class="order--icon" aria-hidden="true"></span>
 				<h1>Commande Privée</h1>
 				<p>Commandez votre bijou exclusif directement sur WhatsApp</p>
 			</div>
 			<form class="order-form" id="orderForm">
 				<div class="form-group">
+					<input type="text" id="fullName" name="fullName" placeholder=" " required>
 					<label for="fullName">Nom complet *</label>
-					<input type="text" id="fullName" name="fullName" required>
 				</div>
 				<div class="form-group">
+					<input type="tel" id="phone" name="phone" placeholder=" " required>
 					<label for="phone">Numéro de téléphone *</label>
-					<input type="tel" id="phone" name="phone" required>
 				</div>
-				<div class="form-group">
-					<label for="jewelryName">Nom du bijou *</label>
+				<div class="form-group select-group">
 					<select id="jewelryName" name="jewelryName" required>
 						<option value="">Sélectionnez un bijou</option>
 						<option value="Aswar Doré">01 — Aswar Doré</option>
@@ -286,22 +288,22 @@
 						<option value="Khalkhal Traditionnel">03 — Khalkhal Traditionnel</option>
 						<option value="Boucles d'Oreilles">04 — Boucles d'Oreilles</option>
 						<option value="Bracelet Prestige">05 — Bracelet Prestige</option>
-						<option value="Bague Éternité">06 — Bague Éternité</option>
+						<option value="Création Éternité">06 — Création Éternité</option>
 						<option value="Pendentif Luxe">07 — Pendentif Luxe</option>
-						<option value="Bague 3D Personnalisée">Bague 3D Personnalisée</option>
+						<option value="Création 3D Personnalisée">Création 3D Personnalisée</option>
 					</select>
 				</div>
 				<div class="form-group">
+					<input type="text" id="productId" name="productId" placeholder=" ">
 					<label for="productId">Numéro du produit (ID)</label>
-					<input type="text" id="productId" name="productId" placeholder="Ex: 01, 02, etc.">
 				</div>
 				<div class="form-group">
+					<input type="number" id="quantity" name="quantity" min="1" value="1" placeholder=" ">
 					<label for="quantity">Quantité</label>
-					<input type="number" id="quantity" name="quantity" min="1" value="1">
 				</div>
-				<div class="form-group">
+				<div class="form-group textarea-group">
+					<textarea id="message" name="message" rows="4" placeholder=" "></textarea>
 					<label for="message">Message personnalisé</label>
-					<textarea id="message" name="message" rows="4" placeholder="Ajoutez un message personnalisé pour votre commande..."></textarea>
 				</div>
 				<button type="submit" class="button-whatsapp">
 					Commander sur WhatsApp

@@ -366,18 +366,30 @@ async function setupViewer(){
         exploreView.style.pointerEvents = "none"
         canvasView.style.pointerEvents = "all"
         canvasContainer.style.zIndex = "1"
-        document.body.style.overflowY = "hidden"
         document.body.style.cursor = "grab"
         sidebar.style.display = "none"
         footerContainer.style.display = "flex"
+        // add class to enable fixed overlay styles
+        document.body.classList.add('personalize-active')
+
+        // run camera animation
         configAnimation()
+
+        // ensure tools and canvas are centered in viewport before locking scroll
+        setTimeout(() => {
+            try {
+                // center the 3D viewer area and fixed footer in the viewport
+                canvasContainer && canvasContainer.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            } catch (e) {}
+            // lock scrolling shortly after the scroll completes
+            setTimeout(() => { document.body.style.overflowY = 'hidden' }, 350)
+        }, 60)
 
         if (!musicPlay) {
             audio.play()
             audio.volume = 0.1
             audio.loop = true
             musicPlay = true
-            
         }
         // customScrollingEnabled = false
     })
@@ -418,10 +430,13 @@ async function setupViewer(){
         canvasView.style.pointerEvents = "none"
         canvasContainer.style.zIndex = "unset"
         document.body.style.overflowY = "auto"
+        document.body.classList.remove('personalize-active')
         exitContainer.style.display = "none"
         document.body.style.cursor = "auto"
         sidebar.style.display = "block"
         footerContainer.style.display = "none"
+        gallerySection.style.display = "block"
+        orderSection.style.display = "block"
         exitConfigAnimation()
 
         // customScrollingEnabled = true;
@@ -467,28 +482,11 @@ async function setupViewer(){
     })
 
     function toggleNightMode(){
-        if(!nightMode){
-            header.classList.add('night--mode--filter')
-            camView1.classList.add('night--mode--filter')
-            camView2.classList.add('night--mode--filter')
-            camView3.classList.add('night--mode--filter')
-            gallerySection?.classList.add('night--mode--filter')
-            orderSection?.classList.add('night--mode--filter')
-            exitContainer.classList.add('night--mode--filter')
-            footerMenu.classList.add('night--mode--filter')
+        nightMode = !nightMode
+        if(nightMode){
             viewer.setBackground(new Color(0x22052f).convertSRGBToLinear())
-            nightMode = true
-        } else{
-            header.classList.remove('night--mode--filter')
-            camView1.classList.remove('night--mode--filter')
-            camView2.classList.remove('night--mode--filter')
-            camView3.classList.remove('night--mode--filter')
-            gallerySection?.classList.remove('night--mode--filter')
-            orderSection?.classList.remove('night--mode--filter')
-            exitContainer.classList.remove('night--mode--filter')
-            footerMenu.classList.remove('night--mode--filter')
+        } else {
             viewer.setBackground(new Color('#0a0a0a').convertSRGBToLinear())
-            nightMode = false
         }
     }
 
