@@ -16,6 +16,7 @@
     "sass": "^1.54.0",
     "typescript": "4.4.4",
     "vite": "^8.0.16",
+    "vercel": "^27.2.0",
     "webgi": "https://storage.googleapis.com/dist.pixotronics.com/webgi/runtime/bundle-0.4.6.tgz"
   },
   "resolutions": {
@@ -35,7 +36,6 @@
   },
   "dependencies": {
     "@studio-freight/lenis": "^0.2.24",
-    "gsap": "^3.10.4",
-    "vercel": "^27.2.0"
+    "gsap": "^3.10.4"
   }
 }
