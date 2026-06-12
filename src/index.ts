@@ -62,6 +62,11 @@ let usingCustomColors = false
 
 async function setupViewer(){
 
+    let needsUpdate = true;
+    function onUpdate(){
+        needsUpdate = true;
+    }
+
     const canvas = document.getElementById('webgi-canvas') as HTMLCanvasElement
     const viewer = new ViewerApp({
         canvas,
@@ -97,7 +102,11 @@ async function setupViewer(){
     const closeConfigMaterial = document.querySelector('.close-materials') as HTMLElement
     const configRing = document.querySelector('.config--ring') as HTMLElement
     const closeConfigGem = document.querySelector('.close-gems') as HTMLElement
-    const sidebar = document.querySelector('.side-bar') as HTMLElement 
+    const sidebar = document.querySelector('.side-bar') as HTMLElement
+    const gallerySection = document.querySelector('.gallery-section') as HTMLElement
+    const orderSection = document.querySelector('.order-section') as HTMLElement
+    const lightbox = document.getElementById('lightbox') as HTMLElement
+    const orderForm = document.getElementById('orderForm') as HTMLFormElement
     let nightMode = false
     let firstLooad = true
     let ringModel = 1
@@ -125,7 +134,7 @@ async function setupViewer(){
     await viewer.addPlugin(DiamondPlugin)
     // const dof = await viewer.addPlugin(DepthOfFieldPlugin)
     await viewer.addPlugin(RandomizedDirectionalLightPlugin, false)
-    viewer.setBackground(new Color('#EEB7B5').convertSRGBToLinear())
+    viewer.setBackground(new Color('#0a0a0a').convertSRGBToLinear())
 
     ssr!.passes.ssr.passObject.lowQualityFrames = 0
     bloom.pass!.passObject.bloomIterations = 2
@@ -298,11 +307,16 @@ async function setupViewer(){
         .to('.side-bar .forever', { opacity: 0.5, scale: 1, ease: "power4.inOut", duration: 2, scrollTrigger: { trigger: ".cam-view-3", start: "top bottom", end: 'top top', scrub: 1, immediateRender: false,}})
         .to('.side-bar .emotions', { opacity: 1, scale: 1.5, ease: "power4.inOut", duration: 2, scrollTrigger: { trigger: ".cam-view-3", start: "top bottom", end: 'top top', scrub: 1, immediateRender: false}})
 
-    }
+        // GALLERY SECTION
+        .addLabel("Gallery")
+        .to('.side-bar .emotions', { opacity: 0.5, scale: 1, ease: "power4.inOut", duration: 2, scrollTrigger: { trigger: ".gallery-section", start: "top bottom", end: 'top top', scrub: 1, immediateRender: false,}})
+        .to('.side-bar .gallery', { opacity: 1, scale: 1.5, ease: "power4.inOut", duration: 2, scrollTrigger: { trigger: ".gallery-section", start: "top bottom", end: 'top top', scrub: 1, immediateRender: false}})
 
-    let needsUpdate = true;
-    function onUpdate(){
-        needsUpdate = true;
+        // ORDER SECTION
+        .addLabel("Order")
+        .to('.side-bar .gallery', { opacity: 0.5, scale: 1, ease: "power4.inOut", duration: 2, scrollTrigger: { trigger: ".order-section", start: "top bottom", end: 'top top', scrub: 1, immediateRender: false,}})
+        .to('.side-bar .order', { opacity: 1, scale: 1.5, ease: "power4.inOut", duration: 2, scrollTrigger: { trigger: ".order-section", start: "top bottom", end: 'top top', scrub: 1, immediateRender: false}})
+
     }
 
     // if(!isMobile){
@@ -458,6 +472,8 @@ async function setupViewer(){
             camView1.classList.add('night--mode--filter')
             camView2.classList.add('night--mode--filter')
             camView3.classList.add('night--mode--filter')
+            gallerySection?.classList.add('night--mode--filter')
+            orderSection?.classList.add('night--mode--filter')
             exitContainer.classList.add('night--mode--filter')
             footerMenu.classList.add('night--mode--filter')
             viewer.setBackground(new Color(0x22052f).convertSRGBToLinear())
@@ -467,9 +483,11 @@ async function setupViewer(){
             camView1.classList.remove('night--mode--filter')
             camView2.classList.remove('night--mode--filter')
             camView3.classList.remove('night--mode--filter')
+            gallerySection?.classList.remove('night--mode--filter')
+            orderSection?.classList.remove('night--mode--filter')
             exitContainer.classList.remove('night--mode--filter')
             footerMenu.classList.remove('night--mode--filter')
-            viewer.setBackground(new Color('#EEB7B5').convertSRGBToLinear())
+            viewer.setBackground(new Color('#0a0a0a').convertSRGBToLinear())
             nightMode = false
         }
     }
@@ -631,9 +649,88 @@ async function setupViewer(){
     // CLOSE MATERIAL MENU
     closeConfigMaterial.addEventListener('click', () => {
         materialsMenu.classList.remove('show')
-       
+
         if (document.querySelector('.footer--menu li.active')){
             document.querySelector('.footer--menu li.active')?.classList.remove('active')
+        }
+    })
+
+    // LIGHTBOX FUNCTIONALITY
+    const galleryItems = document.querySelectorAll('.gallery-item')
+    const lightboxImage = document.querySelector('.lightbox-image') as HTMLImageElement
+    const lightboxTitle = document.querySelector('.lightbox-title') as HTMLElement
+    const lightboxClose = document.querySelector('.lightbox-close') as HTMLElement
+
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const img = item.querySelector('img') as HTMLImageElement
+            const title = item.querySelector('h3') as HTMLElement
+            const number = item.querySelector('.gallery-number') as HTMLElement
+
+            if (lightboxImage && lightboxTitle) {
+                lightboxImage.src = img.src
+                lightboxTitle.textContent = `${number.textContent} — ${title.textContent}`
+                lightbox.classList.add('active')
+            }
+        })
+    })
+
+    lightboxClose?.addEventListener('click', () => {
+        lightbox.classList.remove('active')
+    })
+
+    lightbox?.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active')
+        }
+    })
+
+    // WHATSAPP ORDER FORM
+    // IMPORTANT: Configure this with your actual WhatsApp phone number
+    const WHATSAPP_PHONE = '+212660826754'
+
+    orderForm?.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        const formData = new FormData(orderForm)
+        const fullName = formData.get('fullName') as string
+        const phone = formData.get('phone') as string
+        const jewelryName = formData.get('jewelryName') as string
+        const productId = formData.get('productId') as string
+        const quantity = formData.get('quantity') as string
+        const message = formData.get('message') as string
+
+        const whatsappMessage = `Bonjour Gold Nisrine,
+
+Je souhaite commander :
+
+Bijou : ${jewelryName}
+Numéro : ${productId || 'N/A'}
+Quantité : ${quantity || '1'}
+
+Nom : ${fullName}
+Message : ${message || 'Aucun message'}
+
+Merci.`
+
+        const encodedMessage = encodeURIComponent(whatsappMessage)
+        const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`
+
+        window.open(whatsappUrl, '_blank')
+    })
+
+    // SIDEBAR NAVIGATION FOR NEW SECTIONS
+    document.querySelector('.gallery')?.addEventListener('click', () => {
+        const element = document.querySelector('.gallery-section')
+        if (element) {
+            window.scrollTo({top: element.getBoundingClientRect().top + window.scrollY, left: 0, behavior: 'smooth'})
+        }
+    })
+
+    document.querySelector('.order')?.addEventListener('click', () => {
+        const element = document.querySelector('.order-section')
+        if (element) {
+            window.scrollTo({top: element.getBoundingClientRect().top + window.scrollY, left: 0, behavior: 'smooth'})
         }
     })
 
@@ -655,7 +752,7 @@ async function setupViewer(){
             await manager.addFromPath("./assets/ring2_webgi.glb")
             gsap.to('.loader', {x: '100%', duration: 0.8, ease: "power4.inOut", delay: 1})
 
-            viewer.setBackground(new Color('#EEB7B5').convertSRGBToLinear())
+            viewer.setBackground(new Color('#0a0a0a').convertSRGBToLinear())
     
             ring = viewer.scene.findObjectsByName('Scene_1')[0] as any as Mesh<BufferGeometry,MeshStandardMaterial2>
             silver = viewer.scene.findObjectsByName('alliance')[0] as any as Mesh<BufferGeometry,MeshStandardMaterial2>

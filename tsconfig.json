@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "jsx": "preserve",
     "esModuleInterop": true,
     "sourceMap": true,
@@ -12,5 +12,9 @@
     ],
     "rootDir": "src",
     "moduleResolution": "node"
-  }
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
